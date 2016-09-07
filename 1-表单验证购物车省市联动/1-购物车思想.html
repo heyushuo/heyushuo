@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<ul class="order_header clearfix">
+		<li class="goods_choose">
+			<div class="simulation_check_box">
+				<div class="simulation_check all all_choose">
+					<input type="checkbox" name="select_all">
+					<label></label>
+					全选
+				</div>
+			</div>
+		</li>
+		<li class="goods_info">
+			商品信息
+		</li>
+		<li class="goods_num">
+			数量
+		</li>
+		<li class="goods_price">
+			单价
+		</li>
+		<li class="goods_all">
+			小计
+		</li>
+	</ul>
+	<ul class="order_content clearfix">
+		<li class="content_choose">
+			<div class="simulation_check">
+				<input type="checkbox" name="select_all">
+				<label></label>
+			</div>
+		</li>
+		<li class="content_info clearfix">
+			<a href="###" class="goods_img"><img src="../../images/dum-gallery.jpg" /></a>
+			<div>
+				<a href="###" class="content_info_header">金纺（COMFORT）衣物护理剂hahahaahahha</a>
+				<p>发货方式:<span>保税区发货</span></p>
+				<p>货号:<span>FA67678678768</span></p>
+			</div>
+		</li>
+		<li class="content_num">
+			<p class="buy_num clearfix"><span class="clearfix num_box"><a href="###" class="disable numReduce" >－</a><input type="text" value="1" class="num"/><a href="###" class="numAdd">＋</a></span></p>
+		</li>
+		<li class="content_price">
+			<p class="price">36.00</p>
+			<p>运输费用:<span class="eve_trans_cost">50.00</span></p>
+			<p>税费:<span class="eve_tax_cost">12.00</span></p>
+		</li>
+		<li class="content_all">
+			<p class="sub_price">36.00</p>
+			<p>运输费用:<span class="trans_cost">50.00</span></p>
+			<p>税费:<span class="tax_cost">12.00</span></p>
+		</li>
+	</ul>
+	<ul class="order_content clearfix">
+		<li class="content_choose">
+			<div class="simulation_check">
+				<input type="checkbox" name="select_all">
+				<label></label>
+			</div>
+		</li>
+		<li class="content_info clearfix">
+			<a href="###" class="goods_img"><img src="../../images/dum-gallery.jpg" /></a>
+			<div>
+				<a href="###" class="content_info_header">金纺（COMFORT）衣物护理剂 清新柔...</a>
+				<p>发货方式:<span>保税区发货</span></p>
+				<p>货号:<span>FA67678678768</span></p>
+			</div>
+		</li>
+		<li class="content_num">
+			<p class="buy_num clearfix"><span class="clearfix num_box"><a href="###" class="disable numReduce" >－</a><input type="text" value="1" class="num"/><a href="###" class="numAdd">＋</a></span></p>
+		</li>
+		<li class="content_price">
+			<p class="price">36.00</p>
+			<p>运输费用:<span class="eve_trans_cost">50.00</span></p>
+			<p>税费:<span class="eve_tax_cost">12.00</span></p>
+		</li>
+		<li class="content_all">
+			<p class="sub_price">36.00</p>
+			<p>运输费用:<span class="trans_cost">50.00</span></p>
+			<p>税费:<span class="tax_cost">12.00</span></p>
+		</li>
+	</ul>
+	<div class="settlement">
+		<div class="settlement_content">
+			<a href="###" class="go_buy">去结算</a>
+			<span>已选<span class="theme_color allreay_choose">0</span>件商品</span>
+			<span class="all_num">合计：</span>
+			<span class="money"><span class="rmb">¥</span><span class="total">0.00</span></span>
+		</div>
+		<div class="simulation_check_box">
+			<div>
+				<div class="simulation_check all all_choose">
+				<input type="checkbox" name="select_all">
+				<label></label>
+				全选
+			</div>
+			</div>
+		</div>
+		<a href="###" class="delete">删除</a>
+	</div>
+	<script>
+		// 每件商品的小计
+function setTotal() {
+	var s ,trans,tax;
+	$('.order_content').each(function() {
+		var num = parseFloat($(this).find("input[type='text']").val());
+		s = num * parseFloat($(this).find(".price").text());
+		trans = num * parseFloat($(this).find(".eve_trans_cost").text());
+		tax = num * parseFloat($(this).find(".eve_tax_cost").text());
+		$(this).find(".sub_price").text(s.toFixed(2));
+		$(this).find(".trans_cost").text(trans.toFixed(2));
+		$(this).find(".tax_cost").text(tax.toFixed(2));
+		if ( $(this).find('input[type="text"]').val() > 1 ) {
+			$(this).find('.numReduce').removeClass('disable');
+		}
+    });
+}
+
+// 每个订单的总计
+function getCount() {
+	$('.shopping_box').each(function() {
+		var count1 = 0;
+		var count2 = 0;
+		$(this).find('.order_content').each(function() {
+			if( $(this).find('label').hasClass('check') ) {
+				count1 += parseFloat($(this).find(".sub_price").text()) + parseFloat($(this).find(".trans_cost").text()) + parseFloat($(this).find(".tax_cost").text());
+				count2++;
+			}
+		});
+		$(this).find('.total').text(count1.toFixed(2));
+		$(this).find('.allreay_choose').text(count2);
+	});
+}
+setTotal();
+getCount();
+
+// 模拟check
+$('.simulation_check').click(function() {
+	if ( $(this).hasClass('all') ) {
+		if ( $(this).children('label').hasClass('check') ) {
+			$(this).parent().parent().parent().parent().find('label').removeClass('check').end().
+			find('input').removeAttr('checked');
+		} else {
+			$(this).parent().parent().parent().parent().find('label').addClass('check').end().
+			find('input').attr("checked",true);
+		}
+	} else {;
+		var everyCheck = $(this).parent().parent().parent().find('input[type="checkbox"]');
+		var flag = true;
+		if ( $(this).children('label').hasClass('check') ) {
+			$(this).children('label').removeClass('check').end().
+			children('input').removeAttr('checked');
+		} else {
+			$(this).children('label').addClass('check').end().
+			children('input').attr("checked",true);
+		}
+		for(var i = 0; i<everyCheck.length ;i++) {
+			if( !everyCheck.eq(i).parent().hasClass('all') ) {
+				if( !everyCheck.eq(i).parent().children('label').eq(0).hasClass('check') ) {
+					flag = false;
+				}
+			}
+		}
+		if(flag == false ) {
+			for(var  x=0; x < $(this).parent().parent().parent().find('.all').length ; x ++) {
+				$(this).parent().parent().parent().find('.all').eq(x).find('label').removeClass('check').end().
+				find('input').removeAttr('checked');
+			}
+		} else {
+			for(var  x=0; x < $(this).parent().parent().parent().find('.all').length ; x ++) {
+				$(this).parent().parent().parent().find('.all').eq(x).find('label').addClass('check').end().
+			find('input').attr("checked",true);
+			}
+		}
+	}
+	getCount();
+});
+
+// 删除
+$('.delete').click(function() {
+	var checkbox = $(this).parent().parent().find('input[type="checkbox"]'); 
+	var flag  = false;
+	for(var i = 0; i < checkbox.length ; i++) {
+		if(checkbox.eq(i).attr('checked') == 'checked') {
+			flag = true;
+		}
+	}
+	if( flag == true ) {
+		for(var i = 0; i < checkbox.length ; i++) {
+			if( !checkbox.eq(i).parent().hasClass('all') && checkbox.eq(i).attr('checked') == 'checked' ) {
+				checkbox.eq(i).parent().parent().parent().remove();
+				getCount();
+				$(this).parent().parent().find('.all').find('label').removeClass('check').end().
+				find('input').removeAttr('checked');				
+			}
+		}
+	} else {
+		alert("亲，请选择你想删除的商品！");
+	}
+});
+//商品数量控制
+(function ($) { 
+    $.fn.numControl = function() { 
+    var allNum = 500;//这个值是假的，实际要根据每一个商品的实际库存
+    var numReduce = $(this).find('.numReduce');
+    var num = $(this).find('.num');
+    var numAdd = $(this).find('.numAdd');
+    var reg1 = /^\d*$/;
+	var reg2 = /^0/;
+    numReduce.click(function() {
+   		if($(this).hasClass('disable')) {
+			return;
+		} else {
+			num.val(parseInt(num.val()) - 1);
+			if( parseInt(num.val()) != 1 ) {
+				if ( parseInt(num.val()) < allNum ) {
+					numAdd.removeClass('disable');
+				}
+			} else {
+				$(this).addClass('disable');
+			} 
+		}
+		setTotal();
+		getCount();
+   });
+   numAdd.click(function() {
+		if($(this).hasClass('disable')) {
+			return;
+		} else {
+			num.val(parseInt(num.val()) + 1);
+			numReduce.removeClass('disable');
+			if( parseInt(num.val()) === allNum ) {
+				$(this).addClass('disable');
+			}
+		}
+		setTotal();
+		getCount();
+	});
+   num.keyup(function() {
+		key($(this));
+		setTotal();
+		getCount();
+	});
+   num.keydown(function() {
+		key($(this));
+		setTotal();
+		getCount();
+	});
+   function key(obj) {
+   		if ( !reg1.test(obj.val()) || reg2.test(obj.val()) ) {
+			obj.val(1);
+		} else {
+			if ( obj.val() !== '' && obj.val() < 1 && obj.val() > allNum )   {
+				obj.val(1);
+			} 
+			if( obj.val() < 1 ) {
+				$('#numReduce').addClass('disable');
+			} else if ( obj.val() == 1) {
+				numReduce.addClass('disable');
+				numAdd.removeClass('disable');
+			} else if( obj.val() == allNum ) {
+				numAdd.addClass('disable');
+			} else if( obj.val() > allNum ) {
+				obj.val(obj.val().slice(0,-1));
+			} else {
+				numReduce.removeClass('disable');
+				numAdd.removeClass('disable');
+			}
+		}
+   }
+}; 
+})(jQuery); 
+$('.num_box').each(function() {
+	$(this).numControl();
+});
+	</script>
+	</body>
+</html>
